@@ -20,30 +20,30 @@
 //     tail = newNode;
 //   }
 
-//   deleteNode(int data) {
-//     Node? temp = head, previous;
+// deleteNode(int data) {
+//   Node? temp = head, previous;
 
-//     if (temp != null && temp.data == data) {
-//       head = temp.next;
-//       return;
-//     }
-
-//     while (temp != null && temp.data != data) {
-//       previous = temp;
-//       temp = temp.next;
-//     }
-
-//     if (temp == null) {
-//       return;
-//     }
-
-//     if (temp == tail) {
-//       tail = previous;
-//       tail!.next == null;
-//     }
-
-//     previous!.next = temp.next;
+//   if (temp != null && temp.data == data) {
+//     head = temp.next;
+//     return;
 //   }
+
+//   while (temp != null && temp.data != data) {
+//     previous = temp;
+//     temp = temp.next;
+//   }
+
+//   if (temp == null) {
+//     return;
+//   }
+
+//   if (temp == tail) {
+//     tail = previous;
+//     tail!.next == null;
+//   }
+
+//   previous!.next = temp.next;
+// }
 
 //   insertAfter(int after, int data) {
 //     Node newNode = Node(data);
@@ -120,6 +120,7 @@
 class Node {
   int data;
   Node? next;
+
   Node(this.data);
 }
 
@@ -127,7 +128,7 @@ class LinkedList {
   Node? head;
   Node? tail;
 
-  addNewNode(int data) {
+  addNode(int data) {
     Node newNode = Node(data);
     if (head == null) {
       head = newNode;
@@ -138,73 +139,54 @@ class LinkedList {
   }
 
   deleteNode(int data) {
-    Node? temp = head;
-    Node? previous;
-    if (head!.data == data) {
-      head = temp!.next;
+    Node? temp = head, previous;
+
+    if (temp != null && temp.data == data) {
+      head = temp.next;
       return;
     }
+
     while (temp != null && temp.data != data) {
       previous = temp;
       temp = temp.next;
     }
+
     if (temp == null) {
       return;
     }
 
-    if (tail == data) {
+    if (temp == tail) {
       tail = previous;
-      tail!.next = null;
-      return;
+      tail!.next == null;
     }
+
     previous!.next = temp.next;
   }
 
   insertAfter(int nextTo, int data) {
     Node newNode = Node(data);
     Node? temp = head;
-    while (temp != null && temp.data != nextTo) {
-      temp = temp.next;
-    }
-
-    if (temp!.data == tail) {
-      tail!.next = newNode;
-      return;
-    }
-    newNode.next = temp.next;
-    temp.next = newNode;
-  }
-
-  updateNode(int oldValue, int newValue) {
-    Node? temp = head;
-    while (temp != null && temp.data != oldValue) {
-      temp = temp.next;
-    }
-    temp!.data = newValue;
   }
 
   void display() {
+    Node? temp = head;
     if (head == null) {
       print("Empty");
-      return;
-    }
-    Node? temp = head;
-    while (temp != null) {
-      print(temp.data);
-      temp = temp.next;
+    } else {
+      while (temp != null) {
+        print(temp.data);
+        temp = temp.next;
+      }
     }
   }
 }
 
 void main(List<String> args) {
   LinkedList list = LinkedList();
-  list.addNewNode(10);
-  list.addNewNode(11);
-  list.addNewNode(12);
-  list.addNewNode(13);
-  list.addNewNode(14);
-  list.deleteNode(10);
-  list.insertAfter(14, 20);
-  list.updateNode(11, 1010);
+  list.addNode(10);
+  list.addNode(20);
+  list.addNode(30);
+  list.addNode(40);
+  list.deleteNode(40);
   list.display();
 }
