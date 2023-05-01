@@ -1,6 +1,7 @@
 binarySearch(List array, target) {
   int start = 0;
   int end = array.length - 1;
+
   while (start <= end) {
     int mid = (start + end) ~/ 2;
     int midValue = array[mid];
