@@ -166,6 +166,21 @@ class LinkedList {
   insertAfter(int nextTo, int data) {
     Node newNode = Node(data);
     Node? temp = head;
+
+    while (temp != null && temp.data != nextTo) {
+      temp = temp.next;
+    }
+    if (temp == null) {
+      return;
+    }
+    if (temp == tail) {
+      tail!.next = newNode;
+      tail = newNode;
+      return;
+    }
+
+    newNode.next = temp.next;
+    temp.next = newNode;
   }
 
   void display() {
@@ -188,5 +203,6 @@ void main(List<String> args) {
   list.addNode(30);
   list.addNode(40);
   list.deleteNode(40);
+  list.insertAfter(30, 111);
   list.display();
 }
