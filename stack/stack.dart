@@ -1,16 +1,13 @@
 class Node {
   int data;
   Node? next;
-
   Node(this.data);
 }
 
 class Stack {
   Node? top;
-
   push(int data) {
     Node newNode = Node(data);
-
     if (top == null) {
       top = newNode;
     } else {
@@ -21,10 +18,10 @@ class Stack {
 
   pop() {
     if (top == null) {
-      print("stack underflow");
-      return;
+      print("null");
+    } else {
+      top = top!.next;
     }
-    top = top!.next;
   }
 
   void display() {
@@ -41,13 +38,12 @@ class Stack {
 }
 
 void main(List<String> args) {
-  Stack stack = Stack();
-  stack.push(10);
-  stack.push(20);
-  stack.push(30);
-  stack.push(40);
-  stack.pop();
-  stack.pop();
-  stack.pop();
-  stack.display();
+  Stack list = Stack();
+  list.push(10);
+  list.push(20);
+  list.push(30);
+  list.push(40);
+  list.push(50);
+  list.pop();
+  list.display();
 }
