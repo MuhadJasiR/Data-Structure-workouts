@@ -1,5 +1,5 @@
 quickSort(List arr, int start, int end) {
-  if (end < start) {
+  if (end <= start) {
     return;
   }
   int pivot = partitionSort(arr, start, end);
@@ -10,13 +10,12 @@ quickSort(List arr, int start, int end) {
 int partitionSort(List arr, int start, int end) {
   int i = start - 1;
   int pivot = arr[end];
-
   for (var j = start; j < end; j++) {
     if (arr[j] < pivot) {
       i++;
-      int temp = arr[i];
-      arr[i] = arr[j];
-      arr[j] = temp;
+      int temp = arr[j];
+      arr[j] = arr[i];
+      arr[i] = temp;
     }
   }
   i++;
@@ -27,7 +26,8 @@ int partitionSort(List arr, int start, int end) {
 }
 
 void main(List<String> args) {
-  List arr = [2, 6, 1, 4, 8, 0];
+  List arr = [9, 1, 8, 2, 7, 3, 4, 6, 5];
+  print(arr);
   quickSort(arr, 0, arr.length - 1);
   print(arr);
 }

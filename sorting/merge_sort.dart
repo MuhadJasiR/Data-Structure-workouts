@@ -1,27 +1,31 @@
-mergeSort(List<int> arr) {
-  int length = arr.length;
+void main(List<String> args) {
+  List<int> array = [4, 8, 9, 1, 3, 2, 8];
+
+  mergeSort(array);
+  print(array);
+}
+
+void mergeSort(List<int> array) {
+  int length = array.length;
   if (length <= 1) {
     return;
   }
-
-  int middle = arr.length ~/ 2;
-  int i = 0;
-  int j = 0;
+  int middle = array.length ~/ 2;
+  int i = 0, j = 0;
   List<int> leftArray = List<int>.filled(middle, 0);
-  List<int> rightArray = List<int>.filled(length - middle, 0);
-
-  for (; i < arr.length; i++) {
+  List<int> rightArray = List<int>.filled(array.length - middle, 0);
+  for (; i < array.length; i++) {
     if (i < middle) {
-      leftArray[i] = arr[i];
+      leftArray[i] = array[i];
     } else {
-      rightArray[j] = arr[i];
+      rightArray[j] = array[i];
       j++;
     }
   }
 
   mergeSort(leftArray);
   mergeSort(rightArray);
-  merge(arr, leftArray, rightArray);
+  merge(array, leftArray, rightArray);
 }
 
 void merge(List<int> array, List<int> leftArray, List<int> rightArray) {
@@ -31,28 +35,23 @@ void merge(List<int> array, List<int> leftArray, List<int> rightArray) {
   while (l < leftSize && r < rightSize) {
     if (leftArray[l] < rightArray[r]) {
       array[i] = leftArray[l];
-      i++;
       l++;
+      i++;
     } else {
       array[i] = rightArray[r];
-      i++;
       r++;
+      i++;
     }
   }
+
   while (l < leftSize) {
     array[i] = leftArray[l];
-    i++;
     l++;
+    i++;
   }
   while (r < rightSize) {
     array[i] = rightArray[r];
-    i++;
     r++;
+    i++;
   }
-}
-
-void main(List<String> args) {
-  List<int> arr = [6, 1, 9, 2, 8, 3, 7];
-  mergeSort(arr);
-  print(arr);
 }
