@@ -1,5 +1,3 @@
-import 'dart:math';
-
 binarySearch(List array, int target) {
   int start = 0;
   int end = array.length - 1;

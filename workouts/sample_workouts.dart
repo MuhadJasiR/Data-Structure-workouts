@@ -7,39 +7,28 @@ class Node {
 
 class Stack {
   Node? top;
-  int? count;
+
   push(int data) {
     Node newNode = Node(data);
     if (top == null) {
-      top == newNode;
+      top = newNode;
     } else {
       newNode.next = top;
+      top = newNode;
     }
     top = newNode;
   }
 
-  middleValue() {
-    Node? current = top;
-    if (current == null) {
-      print("empty stack");
-    } else {
-      while (current != null) {
-        current = current.next;
-      }
-    }
-  }
-
   pop() {
     if (top == null) {
-      print("empty");
+      print("stack if empty");
     } else {
       top = top!.next;
     }
   }
 
   deleteMiddle() {
-    if (top == null || top!.next == null) {
-      print("stack is empty or only have one element");
+    if (top == null) {
       return;
     }
     Node? slowPtr = top;
@@ -51,15 +40,14 @@ class Stack {
       slowPtr = slowPtr!.next;
       fastPtr = fastPtr.next!.next;
     }
-
     prev!.next = slowPtr!.next;
     slowPtr.next = null;
   }
 
-  void display() {
+  display() {
     Node? current = top;
-    if (current == null) {
-      print("empty");
+    if (top == null) {
+      print("stack is empty");
     } else {
       while (current != null) {
         print(current.data);
@@ -75,7 +63,7 @@ void main(List<String> args) {
   stack.push(20);
   stack.push(30);
   stack.push(40);
-  // stack.pop();
+  stack.push(50);
   stack.deleteMiddle();
   stack.display();
 }
