@@ -1,69 +1,18 @@
-class Node {
-  int data;
-  Node? next;
-
-  Node(this.data);
-}
-
-class Stack {
-  Node? top;
-
-  push(int data) {
-    Node newNode = Node(data);
-    if (top == null) {
-      top = newNode;
-    } else {
-      newNode.next = top;
-      top = newNode;
+insertionSort(List arr) {
+  for (var i = 0; i < arr.length - 1; i++) {
+    int temp = arr[i];
+    int j = i - 1;
+    while (j >= 0 && arr[j] > temp) {
+      arr[j + 1] = arr[j];
+      j--;
     }
-    top = newNode;
-  }
 
-  pop() {
-    if (top == null) {
-      print("stack if empty");
-    } else {
-      top = top!.next;
-    }
-  }
-
-  deleteMiddle() {
-    if (top == null) {
-      return;
-    }
-    Node? slowPtr = top;
-    Node? fastPtr = top;
-    Node? prev;
-
-    while (fastPtr != null && fastPtr.next != null) {
-      prev = slowPtr;
-      slowPtr = slowPtr!.next;
-      fastPtr = fastPtr.next!.next;
-    }
-    prev!.next = slowPtr!.next;
-    slowPtr.next = null;
-  }
-
-  display() {
-    Node? current = top;
-    if (top == null) {
-      print("stack is empty");
-    } else {
-      while (current != null) {
-        print(current.data);
-        current = current.next;
-      }
-    }
+    arr[j + 1] = temp;
   }
 }
 
 void main(List<String> args) {
-  Stack stack = Stack();
-  stack.push(10);
-  stack.push(20);
-  stack.push(30);
-  stack.push(40);
-  stack.push(50);
-  stack.deleteMiddle();
-  stack.display();
+  List arr = [3, 1, 5, 2, 6];
+  insertionSort(arr);
+  print(arr);
 }
