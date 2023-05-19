@@ -64,11 +64,12 @@ class Node {
   Node(this.data);
 }
 
-class Bts {
+class BinarySearchTree {
   Node? root;
+
   insertion(int data) {
-    Node? current = root;
     Node newNode = Node(data);
+    Node? current = root;
     if (root == null) {
       root = newNode;
       return;
@@ -92,23 +93,11 @@ class Bts {
     }
   }
 
-  contains(int data) {
-    Node? current = root;
-    if (data < current!.data) {
-      current = current.left;
-    } else if (data > current.data) {
-      current = current.right;
-    } else {
-      return true;
-    }
-    return false;
-  }
-
   remove(int data) {
     removeHelper(data, root, null);
   }
 
-  void removeHelper(int data, Node? currentNode, Node? parentNode) {
+  removeHelper(int data, Node? currentNode, Node? parentNode) {
     while (currentNode != null) {
       if (data < currentNode.data) {
         parentNode = currentNode;
@@ -118,49 +107,43 @@ class Bts {
         currentNode = currentNode.right;
       } else {
         if (currentNode.left != null && currentNode.right != null) {
-          currentNode.data = getMinValue(currentNode.right!);
+          currentNode.data = minValue(currentNode.right!);
           removeHelper(currentNode.data, currentNode.right, currentNode);
         } else {
-          if (parentNode == null) {
-            if (currentNode.right == null) {
-              root = currentNode.left;
-            } else {
-              root = currentNode.right;
-            }
-          } else {
-            if (parentNode.left == currentNode) {
-              if (currentNode.right == null) {
-                parentNode.left = currentNode.left;
-              } else {
-                parentNode.left = currentNode.right;
-              }
-            } else {
-              if (currentNode.right == null) {
-                parentNode.right = currentNode.left;
-              } else {
-                parentNode.right = currentNode.right;
-              }
-            }
-          }
+          print("1");
         }
         break;
       }
     }
   }
 
-  getMinValue(Node currentNode) {
-    if (currentNode.left == null) {
-      return currentNode.data;
+  minValue(Node current) {
+    if (current.left == null) {
+      return current.left;
     } else {
-      return getMinValue(currentNode.left!);
+      return minValue(current.left!);
     }
   }
 
-  void inOrder() {
-    inOrderHelper(root!);
+  contains(int data) {
+    Node? currentNode = root;
+    while (currentNode != null) {
+      if (data < currentNode.data) {
+        currentNode = currentNode.left;
+      } else if (data > currentNode.data) {
+        currentNode = currentNode.right;
+      } else {
+        return true;
+      }
+    }
+    return false;
   }
 
-  inOrderHelper(Node? node) {
+  void inOrder() {
+    inOrderHelper(root);
+  }
+
+  void inOrderHelper(Node? node) {
     if (node != null) {
       inOrderHelper(node.left);
       print(node.data);
@@ -168,39 +151,41 @@ class Bts {
     }
   }
 
-  void postOrder() {
-    postOrderHelper(root!);
+  preOrder() {
+    preOrderHelper(root);
   }
 
-  postOrderHelper(Node? node) {
-    if (node != null) {
-      postOrderHelper(node.left);
-      postOrderHelper(node.right);
-      print(node.data);
-    }
-  }
-
-  void preOrder() {
-    preOrderHelper(root!);
-  }
-
-  preOrderHelper(Node? node) {
+  void preOrderHelper(Node? node) {
     if (node != null) {
       print(node.data);
       preOrderHelper(node.left);
       preOrderHelper(node.right);
     }
   }
+
+  postOrder() {
+    postOrderHelper(root);
+  }
+
+  void postOrderHelper(Node? node) {
+    if (node != null) {
+      postOrderHelper(node.left);
+      postOrderHelper(node.right);
+      print(node.data);
+    }
+  }
 }
 
 void main(List<String> args) {
-  Bts bts = Bts();
-  bts.insertion(10);
-  bts.insertion(11);
-  bts.insertion(12);
-  bts.inOrder();
-  print("________");
-  bts.preOrder();
-  print("________");
-  bts.postOrder();
+  BinarySearchTree tree = BinarySearchTree();
+  tree.insertion(10);
+  tree.insertion(8);
+  tree.insertion(11);
+  // tree.remove(8);
+  // print(tree.contains(8));
+  tree.inOrder();
+  print(" ");
+  tree.preOrder();
+  print(" ");
+  tree.postOrder();
 }
