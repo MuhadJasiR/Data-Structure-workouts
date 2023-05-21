@@ -64,12 +64,12 @@ class Node {
   Node(this.data);
 }
 
-class BinarySearchTree {
+class Bst {
   Node? root;
 
   insertion(int data) {
-    Node newNode = Node(data);
     Node? current = root;
+    Node newNode = Node(data);
     if (root == null) {
       root = newNode;
       return;
@@ -93,6 +93,20 @@ class BinarySearchTree {
     }
   }
 
+  contains(int data) {
+    Node? current = root;
+    while (current != null) {
+      if (data < current.data) {
+        current = current.left;
+      } else if (data > current.data) {
+        current = current.right;
+      } else {
+        return true;
+      }
+    }
+    print("object");
+  }
+
   remove(int data) {
     removeHelper(data, root, null);
   }
@@ -107,47 +121,53 @@ class BinarySearchTree {
         currentNode = currentNode.right;
       } else {
         if (currentNode.left != null && currentNode.right != null) {
-          currentNode.data = minValue(currentNode.right!);
+          currentNode.data = minValue(currentNode.right);
           removeHelper(currentNode.data, currentNode.right, currentNode);
         } else {
-          print("1");
+          if (parentNode == null) {
+            if (currentNode.right == null) {
+              root = currentNode.left;
+            } else {
+              root = currentNode.right;
+            }
+          } else {
+            if (parentNode.left == currentNode) {
+              if (currentNode.right == null) {
+                parentNode.left = currentNode.left;
+              } else {
+                parentNode.left = currentNode.right;
+              }
+            } else {
+              if (currentNode.right == null) {
+                parentNode.right = currentNode.left;
+              } else {
+                parentNode.right = currentNode.right;
+              }
+            }
+          }
         }
         break;
       }
     }
   }
 
-  minValue(Node current) {
-    if (current.left == null) {
-      return current.left;
+  int minValue(Node? currentNode) {
+    if (currentNode!.left == null) {
+      return currentNode.data;
     } else {
-      return minValue(current.left!);
+      return minValue(currentNode.left);
     }
   }
 
-  contains(int data) {
-    Node? currentNode = root;
-    while (currentNode != null) {
-      if (data < currentNode.data) {
-        currentNode = currentNode.left;
-      } else if (data > currentNode.data) {
-        currentNode = currentNode.right;
-      } else {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  void inOrder() {
+  inOrder() {
     inOrderHelper(root);
   }
 
-  void inOrderHelper(Node? node) {
-    if (node != null) {
-      inOrderHelper(node.left);
-      print(node.data);
-      inOrderHelper(node.right);
+  void inOrderHelper(Node? currentNode) {
+    if (currentNode != null) {
+      inOrderHelper(currentNode.left);
+      print(currentNode.data);
+      inOrderHelper(currentNode.right);
     }
   }
 
@@ -155,37 +175,25 @@ class BinarySearchTree {
     preOrderHelper(root);
   }
 
-  void preOrderHelper(Node? node) {
-    if (node != null) {
-      print(node.data);
-      preOrderHelper(node.left);
-      preOrderHelper(node.right);
-    }
-  }
-
-  postOrder() {
-    postOrderHelper(root);
-  }
-
-  void postOrderHelper(Node? node) {
-    if (node != null) {
-      postOrderHelper(node.left);
-      postOrderHelper(node.right);
-      print(node.data);
+  void preOrderHelper(Node? currentNode) {
+    if (currentNode != null) {
+      print(currentNode.data);
+      preOrderHelper(currentNode.left);
+      preOrderHelper(currentNode.right);
     }
   }
 }
 
 void main(List<String> args) {
-  BinarySearchTree tree = BinarySearchTree();
-  tree.insertion(10);
-  tree.insertion(8);
-  tree.insertion(11);
-  // tree.remove(8);
-  // print(tree.contains(8));
-  tree.inOrder();
-  print(" ");
-  tree.preOrder();
-  print(" ");
-  tree.postOrder();
+  Bst bst = Bst();
+  bst.insertion(10);
+  bst.insertion(20);
+  bst.insertion(30);
+  bst.insertion(40);
+  // bst.remove(20);
+  // print(bst.contains(20));
+  bst.remove(20);
+  bst.inOrder();
+  print("");
+  bst.preOrder();
 }
