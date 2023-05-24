@@ -1,83 +1,27 @@
-class Heap {
-  List heap = [];
+class Node {
+  int value;
+  Node? left;
+  Node? right;
 
-  Heap(List array) {
-    buildHeap(array);
-  }
-
-  buildHeap(List arr) {
-    heap = arr;
-    for (var i = getParentNode(heap.length - 1); i > 0; i--) {
-      shiftDown(i);
-    }
-  }
-
-  insert(int data) {
-    heap.add(data);
-    shiftUp(data);
-  }
-
-  display() {
-    print(heap);
-  }
-
-  shiftDown(int current) {
-    int endIdx = heap.length - 1;
-    int leftIdx = getLeftChild(current);
-    while (leftIdx <= endIdx) {
-      int rightIdx = getRightChild(current);
-      int shiftIdx;
-      if (rightIdx <= endIdx &&
-          heap.elementAt(rightIdx) < heap.elementAt(leftIdx)) {
-        shiftIdx = rightIdx;
-      } else {
-        shiftIdx = leftIdx;
-      }
-
-      if (heap.elementAt(shiftIdx) < heap.elementAt(current)) {
-        swap(shiftIdx, current);
-        current = shiftIdx;
-        leftIdx = getLeftChild(current);
-      } else {
-        return;
-      }
-    }
-  }
-
-  shiftUp(int current) {
-    int parentNode = getParentNode(current);
-    while (
-        current > 0 && heap.elementAt(parentNode) > heap.elementAt(current)) {
-      swap(current, parentNode);
-      current = parentNode;
-      parentNode = getParentNode(current);
-    }
-  }
-
-  getLeftChild(int i) {
-    return (i * 2) + 1;
-  }
-
-  getRightChild(int i) {
-    return (i * 2) + 2;
-  }
-
-  getParentNode(int i) {
-    return (i - 1) ~/ 2;
-  }
-
-  swap(int i, int j) {
-    int temp = heap[i];
-    heap[i] = heap[j];
-    heap[j] = temp;
-  }
+  Node(this.value);
 }
 
-void main(List<String> args) {
-  List arr = [1, 5, 2, 3];
+bool isValidBST(Node root) {
+  return isValidBSTHelper(root, null, null);
+}
 
-  Heap heap = Heap(arr);
-  heap.insert(4);
-  heap.insert(7);
-  heap.display();
+bool isValidBSTHelper(Node? node, int? min, int? max) {
+  if (node == null) {
+    return true;
+  }
+
+  // Check if the current node value is within the valid range
+  if ((min != null && node.value <= min) ||
+      (max != null && node.value >= max)) {
+    return false;
+  }
+
+  // Recursively check the left and right subtrees with updated valid ranges
+  return isValidBSTHelper(node.left, min, node.value) &&
+      isValidBSTHelper(node.right, node.value, max);
 }

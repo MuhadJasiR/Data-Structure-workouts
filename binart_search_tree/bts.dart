@@ -100,6 +100,10 @@ class Bst {
     }
   }
 
+  isValidBst(Node root) {
+    return isValidBstHelper(root, null, null);
+  }
+
   inOrder() {
     inOrderHelper(root);
   }
@@ -122,6 +126,20 @@ class Bst {
       preOrderHelper(currentNode.left);
       preOrderHelper(currentNode.right);
     }
+  }
+
+  isValidBstHelper(Node? node, int? min, int? max) {
+    if (node == null) {
+      return true;
+    }
+
+    if ((min != null && node.data <= min) ||
+        (max != null && node.data >= max)) {
+      return false;
+    }
+
+    return isValidBstHelper(node.left, min, node.data) &&
+        isValidBstHelper(node.right, node.data, max);
   }
 }
 
