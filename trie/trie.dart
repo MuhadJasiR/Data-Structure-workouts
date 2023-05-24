@@ -1,11 +1,11 @@
-class Trie {
-  Map<String, Trie?> children = {};
+class TrieNode {
+  Map<String, TrieNode?> children = {};
 }
 
-class TrieOperation {
-  Trie root = Trie();
+class Trie {
+  TrieNode root = TrieNode();
   String endSymbol = '*';
-  TrieOperation(String str) {
+  Trie(String str) {
     populateSuffix(str);
   }
   void populateSuffix(String str) {
@@ -15,11 +15,11 @@ class TrieOperation {
   }
 
   void insertSubstring(int index, String str) {
-    Trie node = root;
+    TrieNode node = root;
     for (int i = index; i < str.length; i++) {
       String letter = str[i];
       if (!node.children.containsKey(letter)) {
-        Trie newNode = Trie();
+        TrieNode newNode = TrieNode();
         node.children[letter] = newNode;
       }
       node = node.children[letter]!;
@@ -28,7 +28,7 @@ class TrieOperation {
   }
 
   bool contains(String str) {
-    Trie node = root;
+    TrieNode node = root;
     for (int i = 0; i < str.length; i++) {
       String letter = str[i];
       if (!node.children.containsKey(letter)) {
@@ -41,6 +41,6 @@ class TrieOperation {
 }
 
 void main(List<String> args) {
-  TrieOperation tr = TrieOperation('jasir');
+  Trie tr = Trie('jasir');
   print(tr.contains('jasir'));
 }
