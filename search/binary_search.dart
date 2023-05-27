@@ -18,7 +18,7 @@ binarySearch(List array, int target) {
 
 void main(List<String> args) {
   List<int> array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  int target = 6;
+  int target = 4;
   int result = binarySearch(array, target);
   if (result == -1) {
     print("not found");

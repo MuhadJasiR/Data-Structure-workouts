@@ -1,27 +1,27 @@
-class Node {
-  int value;
-  Node? left;
-  Node? right;
-
-  Node(this.value);
+void main(List<String> args) {
+  List arr = [1, 22, 35, 42, 55, 61, 73, 82];
+  int target = 61;
+  int ans = binarySearch(arr, target);
+  if (ans == -1) {
+    print("$target not found");
+  } else {
+    print("$target is found at the index ${ans + 1}");
+  }
 }
 
-bool isValidBST(Node root) {
-  return isValidBSTHelper(root, null, null);
-}
-
-bool isValidBSTHelper(Node? node, int? min, int? max) {
-  if (node == null) {
-    return true;
+int binarySearch(List arr, int target) {
+  int start = 0;
+  int end = arr.length - 1;
+  while (start <= end) {
+    int mid = (start + end) ~/ 2;
+    int midValue = arr[mid];
+    if (midValue == target) {
+      return mid;
+    } else if (midValue < target) {
+      start = mid + 1;
+    } else {
+      end = mid - 1;
+    }
   }
-
-  // Check if the current node value is within the valid range
-  if ((min != null && node.value <= min) ||
-      (max != null && node.value >= max)) {
-    return false;
-  }
-
-  // Recursively check the left and right subtrees with updated valid ranges
-  return isValidBSTHelper(node.left, min, node.value) &&
-      isValidBSTHelper(node.right, node.value, max);
+  return -1;
 }
